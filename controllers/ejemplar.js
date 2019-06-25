@@ -47,8 +47,8 @@ function getejemplarHome(req, res) { // busca un ejemplar a mostrar en el home s
 }
 
 function saveEjemplar(req,res){
-    console.log('POST /api/ejemplar')
-    console.log(req.body)
+    //console.log('POST /api/ejemplar')
+    //console.log(req.body)
       
     let ejemplar = new Ejemplar()
     ejemplar.tipoEjemplar = req.body.tipoEjemplar

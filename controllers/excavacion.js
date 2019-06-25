@@ -56,8 +56,8 @@ function getExcavacionesColector(req,res){
 }
 
 function saveExcavacion(req,res){
-    console.log('POST /api/excavacion')
-    console.log(req.body)
+    //console.log('POST /api/excavacion')
+    //console.log(req.body)
       
     let excavacion = new Excavacion()
     excavacion.nombre = req.body.nombre
@@ -101,8 +101,8 @@ function getExcavacionId(req, res) { // busca una excavacion por su ID - clave m
 function updateExcavacion(req,res){
     let excavacionId= req.params.excavacionId
     let update= req.body
-    console.log('POST /api/excavacion/:ExcavacionId UpdateExcavacion......')
-    console.log(req.body)
+    //console.log('POST /api/excavacion/:ExcavacionId UpdateExcavacion......')
+    //console.log(req.body)
     
     Excavacion.findByIdAndUpdate(excavacionId, update, (err, excavacionUpdate)=>{
         if(err) return  res.status(500).send({message: `Error al tratar de actualizar: ${err}`})

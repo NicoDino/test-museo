@@ -4,8 +4,8 @@ const Exploracion = require('../models/exploracion');
 
 
 function saveExploracion(req,res){
-    console.log('POST /api/exploracion')
-    console.log(req.body)
+    //console.log('POST /api/exploracion')
+    //console.log(req.body)
       
     let exploracion = new Exploracion()
     exploracion.nombre = req.body.nombre
@@ -29,8 +29,8 @@ function getExploracionId(req, res) { // busca una persona por su ID - clave mon
 function updateExploracion(req,res){
     let exploracionId= req.params.exploracionId
     let update= req.body
-    console.log('POST /api/persona/:PersonaId UpdatePersona......', req.params.exploracionId)
-    console.log(req.body)
+    //console.log('POST /api/persona/:PersonaId UpdatePersona......', req.params.exploracionId)
+    //console.log(req.body)
     
     Exploracion.findByIdAndUpdate(exploracionId, update, (err, exploracionUpdate)=>{
         if(err) return  res.status(500).send({message: `Error al tratar de actualizar: ${err}`})

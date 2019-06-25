@@ -39,8 +39,8 @@ function getbochonEjemplar(req, res) { // busca un bochon por su ejemplar Asocia
 }
 
 function saveBochon(req,res){
-    console.log('POST /api/bochon')
-    console.log(req.body)
+    //console.log('POST /api/bochon')
+    //console.log(req.body)
       
     let bochon = new Bochon()
     bochon.nombre = req.body.nombre
