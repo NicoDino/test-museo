@@ -14,6 +14,7 @@ function getpiezaId(req, res) { // busca una pieza por su ID - clave mongo
 function getpiezaIdentificador(req, res) { // busca una pieza por su identificador
     let piezaIdentificador = req.params.piezaId
     Pieza.findOne({ 'identificador': piezaIdentificador }, (err, pieza) => {
+        // console.log(pieza)
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
         if (!pieza) return res.status(404).send({ message: `La pieza no existe buscada` })
         res.status(200).send({ pieza: pieza })
@@ -23,6 +24,8 @@ function getpiezaIdentificador(req, res) { // busca una pieza por su identificad
 function getpiezaEjemplar(req, res) { // busca las piezas asociadas a un Ejemplar
     let idEjemplar = req.params.piezaId
     Pieza.find({ 'perteneceEjemplar': idEjemplar }, (err, pieza) => {
+        // console.log(pieza)
+
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
         if (!pieza) return res.status(404).send({ message: `No existen Piezas para el Ejemplar` })
         res.status(200).send({ pieza: pieza })
