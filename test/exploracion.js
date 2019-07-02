@@ -9,9 +9,9 @@ describe('/POST Exploracion', () => {
 
     it('it should  POST Exploracion', (done) => {
         let exploracion = {
-            "idExploracion":"1",
-            "nombre":"1",
-            "fecha":"1"
+            "idExploracion": "1",
+            "nombre": "1",
+            "fecha": "1"
         }
         chai.request(server)
             .post('/api/exploracion')
@@ -21,6 +21,25 @@ describe('/POST Exploracion', () => {
                 done();
             });
     });
+});
+
+describe('/PUT Exploracion', () => {
+    it.only('it should  POST Exploracion', (done) => {
+
+        let exploracion2 = {
+            "idExploracion": "2",
+            "nombre": "EXPLORACION MODIFICADA",
+            "fecha": "2"
+        }
+        chai.request(server)
+            .put('/api/exploracion/5d1bc67ce9843613c9b35970')
+            .send(exploracion2)
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    })
+
 });
 
 
@@ -84,7 +103,7 @@ describe('exploraciones', () => {
 
 
 
- 
+
     // // UNHAPPY test POST exploracion
     describe('/POST exploracion', () => {
         let exploracion = {
