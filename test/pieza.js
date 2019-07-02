@@ -100,9 +100,37 @@ describe('Piezas', () => {
                 });
         });
 
+
         it('it should  GET piezas by idEjemplar(al que pertenece)', (done) => {
+            // posteamos primero una pieza con los datos necesarios para el test
+            let pieza = {
+                "imagenesPieza": [],
+                "identificador": "test-idEjemplar",
+                "medidasPieza": {
+                    "_id": "5d1280ad13508a5b690cbc0c",
+                    "ancho": 14.5,
+                    "largo": 52.68,
+                    "alto": 0,
+                    "diametro": 0,
+                    "circunferencia": 0
+                },
+                "fechaIngreso": "2001-09-18T03:00:00.000Z",
+                "fechaBaja": null,
+                "motivoBaja": "",
+                "perteneceEjemplar": "idtestejemplar",
+                "origen": "ExcavaciónPropia",
+
+            };
+
             chai.request(server)
-                .get('/api/piezaEjemplar/5ac96cbd4de457232452aab5')
+                .post('/api/pieza')
+                .send(pieza)
+                .end((err, res) => {
+                });
+            // fin preparacion datos
+
+            chai.request(server)
+                .get('/api/piezaEjemplar/idtestejemplar')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -114,26 +142,26 @@ describe('Piezas', () => {
     });
 
     describe('/POST pieza', () => {
-        let pieza = {
-            "imagenesPieza": [],
-            "identificador": "AC-145-test",
-            "medidasPieza": {
-                "_id": "5d1280ad13508a5b690cbc0c",
-                "ancho": 14.5,
-                "largo": 52.68,
-                "alto": 0,
-                "diametro": 0,
-                "circunferencia": 0
-            },
-            "fechaIngreso": "2001-09-18T03:00:00.000Z",
-            "fechaBaja": null,
-            "motivoBaja": "",
-            "perteneceEjemplar": "5ac96cbd4de457232452aab5",
-            "origen": "ExcavaciónPropia",
-
-        };
 
         it('it should  POST pieza', (done) => {
+            let pieza = {
+                "imagenesPieza": [],
+                "identificador": "AC-145-test",
+                "medidasPieza": {
+                    "_id": "5d1280ad13508a5b690cbc0c",
+                    "ancho": 14.5,
+                    "largo": 52.68,
+                    "alto": 0,
+                    "diametro": 0,
+                    "circunferencia": 0
+                },
+                "fechaIngreso": "2001-09-18T03:00:00.000Z",
+                "fechaBaja": null,
+                "motivoBaja": "",
+                "perteneceEjemplar": "5ac96cbd4de457232452aab5",
+                "origen": "ExcavaciónPropia",
+
+            };
             chai.request(server)
                 .post('/api/pieza')
                 .send(pieza)
@@ -148,43 +176,51 @@ describe('Piezas', () => {
         });
         // // UNHAPPY test POST pieza
 
-        let piezaFail = {
+        let piezaShouldFail = {
             "fruta": "kiwi"
         };
 
-        it('it should FAIL TO POST pieza', (done) => {
+        it('it should FAIL TO POST pieza - documento incorrecto', (done) => {
             chai.request(server)
                 .post('/api/pieza')
-                .send(piezaFail)
+                .send(piezaShouldFail)
                 .end((err, res) => {
                     res.should.have.status(404);
                     done();
                 });
         });
 
-        let piezaOk = {
-            "imagenesPieza": [],
-            "identificador": "AC-145-test",
-            "medidasPieza": {
-                "_id": "5d1280ad13508a5b690cbc0c",
-                "ancho": 14.5,
-                "largo": 52.68,
-                "alto": 0,
-                "diametro": 0,
-                "circunferencia": 0
-            },
-            "fechaIngreso": "2001-09-18T03:00:00.000Z",
-            "fechaBaja": null,
-            "motivoBaja": "",
-            "perteneceEjemplar": "5ac96cbd4de457232452aab5",
-            "origen": "ExcavaciónPropia",
 
-        };
 
         it('it should FAIL TO POST  pieza - identificador repetido', (done) => {
+            let piezaRepetida = {
+                "imagenesPieza": [],
+                "identificador": "testIdentificadorRepetido",
+                "medidasPieza": {
+                    "_id": "5d1280ad13508a5b690cbc0c",
+                    "ancho": 14.5,
+                    "largo": 52.68,
+                    "alto": 0,
+                    "diametro": 0,
+                    "circunferencia": 0
+                },
+                "fechaIngreso": "2001-09-18T03:00:00.000Z",
+                "fechaBaja": null,
+                "motivoBaja": "",
+                "perteneceEjemplar": "5ac96cbd4de457232452aab5",
+                "origen": "ExcavaciónPropia",
+
+            };
+
             chai.request(server)
                 .post('/api/pieza')
-                .send(piezaOk)
+                .send(piezaRepetida)
+                .end((err, res) => {
+                });
+
+            chai.request(server)
+                .post('/api/pieza')
+                .send(piezaRepetida)
                 .end((err, res) => {
                     res.should.have.status(400);
                     done();
